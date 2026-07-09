@@ -1,0 +1,16 @@
+POST http://localhost:3001/api/solicitud
+Content-Type: application/json
+
+{
+    "nombre": "pablo",
+    "apellido": "ospina",
+    "email": "locura@gmail.com",
+    "formacion": "ADSO",
+    "contenido": [
+        {
+            "identificacion": "54442245",
+            "edad": 5,
+            "tipo_sangre": "O-"
+        }
+    ]
+}
