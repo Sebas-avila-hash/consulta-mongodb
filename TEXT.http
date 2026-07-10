@@ -1,0 +1,37 @@
+POST http://localhost:3001/api/solicitud
+Content-Type: application/json
+
+{
+    "nombre": "pablo",
+    "apellido": "ospina",
+    "email": "locura@gmail.com",
+    "formacion": "ADSO",
+    "contenido": [
+        {
+            "identificacion": "54442245",
+            "edad": 5,
+            "tipo_sangre": "O-"
+        }
+    ]
+}
+
+###
+PUT http://localhost:3001/api/solicitud/6a4e8069e9665ecc17ef8530
+Content-Type: application/json
+
+{
+    "nombre": "pabloD",
+    "apellido": "ospina3",
+    "email": "locura@gmai5l.com",
+    "formacion": "ADSOS",
+    "contenido": [
+        {
+            "identificacion": "5444224655",
+            "edad": 56,
+            "tipo_sangre": "O"
+        }
+    ]
+}
+
+###
+DELETE http://localhost:3001/api/solicitud/6a4e660a65a88b1a314336c2
