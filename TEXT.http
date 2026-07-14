@@ -1,11 +1,11 @@
-POST http://localhost:3001/api/solicitud
+POST http://localhost:3001/api/v1/solicitud
 Content-Type: application/json
 
 {
-    "nombre": "pablo",
-    "apellido": "ospina",
-    "email": "locura@gmail.com",
-    "formacion": "ADSO",
+    "nombre": "ablo",
+    "apellido": "opina",
+    "email": "locudra@gmail.com",
+    "formacion": "ADSOs",
     "contenido": [
         {
             "identificacion": "54442245",
@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:3001/api/solicitud/6a4e8069e9665ecc17ef8530
+PUT http://localhost:3001/api/v1/solicitud/6a4e8069e9665ecc17ef8530
 Content-Type: application/json
 
 {
@@ -34,4 +34,6 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3001/api/solicitud/6a4e660a65a88b1a314336c2
+DELETE http://localhost:3001/api/v1/solicitud/6a4e660a65a88b1a314336c2
+
+ 
