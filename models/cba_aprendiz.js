@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const contenidoSchema = new mongoose.Schema({
   identificacion: {
     type: String,
-    required: true
+    required: [true,"la identificacion es necesaria"],
+    trim:true
   },
   edad: {
     type: Number,
@@ -20,11 +21,13 @@ const contenidoSchema = new mongoose.Schema({
 const cbaAprendizSchema = new mongoose.Schema({
   nombre: {
     type: String,
-    required: true
+    required: [true,"el nombre del aprendiz ess obligatorio"],
+    trim: true
   },
   apellido: {
     type: String,
-    required: true
+    required: [true,"el apellido del aprendiz ess obligatorio"],
+    trim: true
   },
   email: {
     type: String,
@@ -33,7 +36,8 @@ const cbaAprendizSchema = new mongoose.Schema({
   },
   formacion: {
     type: String,
-    required: true
+    required: [true,"la formacion es obligatorio"],
+    trim: true
   },
   // --- NUEVO CAMPO PARA EL ESTADO ---
   estado: {

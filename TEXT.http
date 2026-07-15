@@ -2,17 +2,19 @@ POST http://localhost:3001/api/v1/solicitud
 Content-Type: application/json
 
 {
-    "nombre": "ablo",
+    "nombre": "cristina",
     "apellido": "opina",
-    "email": "locudra@gmail.com",
+    "email": "loudra@gmail.com",
     "formacion": "ADSOs",
+    "estado":"pendiente",
     "contenido": [
         {
-            "identificacion": "54442245",
+            "identificacion": "5444224545",
             "edad": 5,
-            "tipo_sangre": "O-"
+            "tipo_sangre": "O+"
         }
     ]
+    
 }
 
 ###
@@ -35,5 +37,3 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3001/api/v1/solicitud/6a4e660a65a88b1a314336c2
-
- 

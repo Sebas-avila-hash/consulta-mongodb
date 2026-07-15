@@ -8,6 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 const middlewareRevision = (req, res, next) => {
     const horaActual = new Date().toLocaleDateString();
     console.log(`[${horaActual}] Peticion entrante: ${req.method} a la ruta ${req.url}`);

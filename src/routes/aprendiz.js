@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose'); // Usado para validar los ObjectIds
 const cba_aprendiz = require('../../models/cba_aprendiz');
-const aprendizController = require('../controllers/aprendiz'); // Tu controlador con actualizarEstado
+const aprendizController = require('../../controllers/aprendiz'); // Tu controlador con actualizarEstado
 
 // Endpoint PATCH solicitado
 router.patch('/actualizar-estado/:id', aprendizController.actualizarEstado);
@@ -10,12 +10,8 @@ router.patch('/actualizar-estado/:id', aprendizController.actualizarEstado);
 // 1. CREAR SOLICITUD
 router.post('/solicitud', async (req, res) => {
     try {
-        const nuevasolicitud = req.body;
-        if (!nuevasolicitud.nombre || !nuevasolicitud.email) {
-            return res.status(400).json({
-                error: "Formato inválido, el email y nombre son obligatorios"
-            });
-        }
+        const nuevasolicitud = new producto(req.body);
+        //const resultado= new 
 
         const nuevoAprendiz = new cba_aprendiz(nuevasolicitud);
         const resultado = await nuevoAprendiz.save();
