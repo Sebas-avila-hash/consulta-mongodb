@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Subesquema para el array de contenido
 const contenidoSchema = new mongoose.Schema({
   identificacion: {
     type: String,
@@ -39,7 +38,7 @@ const cbaAprendizSchema = new mongoose.Schema({
     required: [true,"la formacion es obligatorio"],
     trim: true
   },
-  // --- NUEVO CAMPO PARA EL ESTADO ---
+  
   estado: {
     type: String,
     enum: ['pendiente', 'procesado', 'finalizado'],

@@ -11,7 +11,7 @@ Content-Type: application/json
         {
             "identificacion": "5444224545",
             "edad": 5,
-            "tipo_sangre": "O+"
+            "tipo_sangre": "O"
         }
     ]
     
@@ -37,3 +37,4 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3001/api/v1/solicitud/6a4e660a65a88b1a314336c2
+
