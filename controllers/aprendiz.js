@@ -4,7 +4,7 @@ const CbaAprendiz = require('../models/cba_aprendiz');
 // 1. OBTENER APRENDICES (Traer todos los registros de forma segura)
 const obtenerAprendices = async (req, res) => {
     try {
-        const aprendices = await CbaAprendiz.find();
+        const aprendices = await CbaAprendiz.find().populate('contenido');
         return res.status(200).json(aprendices);
     } catch (error) {
         console.error("❌ Error en GET /aprendices:", error);

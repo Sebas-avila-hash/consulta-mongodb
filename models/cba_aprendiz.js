@@ -45,11 +45,12 @@ const cbaAprendizSchema = new mongoose.Schema({
     default: 'pendiente',
     required: true
   },
-  contenido: [contenidoSchema], 
-  fecha_ingreso: {
-    type: String, 
-    required: false
+  contenido:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Contenido',
+    required:false
   },
+  
   fecha_salida: {
     type: String, 
     required: false

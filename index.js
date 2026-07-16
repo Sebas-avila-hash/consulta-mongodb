@@ -16,18 +16,22 @@ const middlewareRevision = (req, res, next) => {
 };
 
 app.use(middlewareRevision);
+app.post('/api/v1/contenidos-test', (req, res) => {
+    res.status(200).json({ mensaje: "¡La ruta directa funciona!", body: req.body });
+});
 
 const healthRoutes = require('./src/routes/salud');
-app.use('/api/v1', healthRoutes);
+app.use('/api/v1/salud', healthRoutes);
 
 const aprendizRoutes = require('./src/routes/aprendiz');
-app.use('/api/v1', aprendizRoutes);
-
+app.use('/api/v1/aprendices', aprendizRoutes);
+const contenidoRoutes = require("./src/routes/contenido");
+app.use('/api/v1/contenidos', contenidoRoutes);
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log("✅ MongoDB conectado");
 
-    const PORT = process.env.PORT || 3001;
+    const PORT = process.env.PORT || 3000;
 
     app.listen(PORT, () => {
         console.log(`Servidor escuchando en el puerto ${PORT}`);

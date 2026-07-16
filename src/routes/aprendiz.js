@@ -4,25 +4,44 @@ const mongoose = require('mongoose');
 const cba_aprendiz = require('../../models/cba_aprendiz');
 const { actualizarEstado, obtenerAprendices, actualizarAprendiz } = require('../../controllers/aprendiz');
 router.patch('/solicitud/:id',actualizarEstado);
+const cba_contenido = require('../../models/contenido');
 
 // 1. CREAR SOLICITUD
 router.post('/solicitud', async (req, res) => {
     try {
-       
-        const nuevoAprendiz = new cba_aprendiz(req.body);
+        const datosUsuario = req.body;
+
+        // Si el cliente envía un ID en el campo contenido, buscamos todo su objeto en la BD
+        if (datosUsuario.contenido && mongoose.Types.ObjectId.isValid(datosUsuario.contenido)) {
+            const contenidoCompleto = await cba_contenido.findById(datosUsuario.contenido);
+            
+            if (!contenidoCompleto) {
+                return res.status(404).json({ 
+                    error: "No se encontró el contenido asociado",
+                    mensaje: `El ID '${datosUsuario.contenido}' no existe en la base de datos.` 
+                });
+            }
+
+            // Reemplazamos el ID de texto por el documento de contenido completo
+            datosUsuario.contenido = contenidoCompleto;
+        }
+
+        // Creamos el aprendiz con todos los datos inyectados
+        const nuevoAprendiz = new cba_aprendiz(datosUsuario);
         const resultado = await nuevoAprendiz.save();
+
         res.status(201).json({
-            mensaje: "Solicitud creada",
+            mensaje: "Solicitud creada con éxito y todos los datos del contenido asignados",
             id_generado: resultado._id,
             datosGuardados: resultado
         });
-    } catch (error) {
 
+    } catch (error) {
         console.error("❌ ERROR DETALLADO EN POST:", error);
         res.status(500).json({ 
             error: "Error crítico al guardar la solicitud",
-            detalleError: error.message, // <-- Esto nos dirá exactamente qué falló
-            objetoError: error // <-- Y esto nos dará toda la estructura del error
+            detalleError: error.message,
+            objetoError: error 
         });
     }
 });

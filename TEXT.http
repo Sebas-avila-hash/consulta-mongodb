@@ -1,40 +1,20 @@
-POST http://localhost:3001/api/v1/solicitud
+POST http://localhost:3000/api/v1/contenidos
 Content-Type: application/json
 
 {
-    "nombre": "cristina",
-    "apellido": "opina",
-    "email": "loudra@gmail.com",
-    "formacion": "ADSOs",
-    "estado":"pendiente",
-    "contenido": [
-        {
-            "identificacion": "5444224545",
-            "edad": 5,
-            "tipo_sangre": "O"
-        }
-    ]
-    
+            "identificacion": "1111111110",
+            "edad": 16,
+            "tipo_sangre": "-O" 
 }
 
 ###
-PUT http://localhost:3001/api/v1/solicitud/6a4e8069e9665ecc17ef8530
+POST http://localhost:3000/api/v1/aprendices/solicitud
 Content-Type: application/json
 
 {
-    "nombre": "pabloD",
-    "apellido": "ospina3",
-    "email": "locura@gmai5l.com",
-    "formacion": "ADSOS",
-    "contenido": [
-        {
-            "identificacion": "5444224655",
-            "edad": 56,
-            "tipo_sangre": "O"
-        }
-    ]
+    "nombre": "Ivan",
+    "apellido": "Clavijazo",
+    "email": "clavix@gmail.com",
+    "formacion": "ADSO",
+    "contenido": "6a58fa7d1c44ba5064e54d27"
 }
-
-###
-DELETE http://localhost:3001/api/v1/solicitud/6a4e660a65a88b1a314336c2
-
