@@ -19,37 +19,51 @@ app.use(middlewareRevision);
 // --- OPTIMIZACIÓN PARA MONGODB (SERVERLESS) ---
 let isConnected = false;
 let lastConnectAttempt = 0;
-const CONNECT_RETRY_MS = 30 * 1000; // esperar 30s entre intentos fallidos
+const CONNECT_RETRY_MS = 30 * 1000;
+
+function getMongoUri() {
+    return process.env.MONGO_URI || process.env.MONGODB_URI || process.env.MONGO_URL;
+}
 
 async function connectToDatabase() {
-    if (!process.env.MONGO_URI) {
-        console.warn("⚠️ MONGO_URI no está definido. No se establecerá la conexión con MongoDB.");
+    const mongoUri = getMongoUri();
+
+    if (!mongoUri) {
+        console.warn("⚠️ No se encontró una URI de MongoDB. Se omite la conexión.");
         return;
     }
-    // evitar reintentos continuos si acaba de fallar
+
     const now = Date.now();
     if (isConnected) {
         return;
     }
     if (now - lastConnectAttempt < CONNECT_RETRY_MS) {
-        // Demasiado pronto para reintentar
         return;
     }
+
+    lastConnectAttempt = now;
+
     try {
-        const db = await mongoose.connect(process.env.MONGO_URI);
-        isConnected = db.connections[0].readyState;
+        const db = await mongoose.connect(mongoUri, {
+            serverSelectionTimeoutMS: 5000,
+            maxPoolSize: 5,
+        });
+        isConnected = db.connections[0].readyState === 1;
         console.log("✅ MongoDB conectado");
     } catch (err) {
-        lastConnectAttempt = Date.now();
         isConnected = false;
-        console.error("❌ Error al conectar con MongoDB", err);
+        console.error("❌ Error al conectar con MongoDB:", err.message);
     }
 }
 
-// Aseguramos la conexión en cada petición antes de procesar rutas
-app.use(async (req, res, next) => {
-    // No bloquear la petición si la DB no responde rápidamente
-    connectToDatabase().catch(err => console.error('Error connectToDatabase (async):', err));
+mongoose.connection.on('error', (err) => {
+    isConnected = false;
+    console.error('❌ Error de conexión de Mongoose:', err.message);
+});
+
+// Aseguramos la conexión en cada petición antes de procesar rutas.
+app.use((req, res, next) => {
+    connectToDatabase().catch((err) => console.error('Error connectToDatabase (async):', err.message));
     next();
 });
 // ----------------------------------------------
@@ -77,12 +91,15 @@ app.use('/api/v1/aprendices', aprendizRoutes);
 const contenidoRoutes = require("./src/routes/contenido");
 app.use('/api/v1/contenidos', contenidoRoutes);
 
-// Solo iniciamos el puerto en desarrollo local. En Vercel, Vercel se encarga de todo.
-if (process.env.NODE_ENV !== 'production') {
+function startServer() {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
         console.log(`Servidor local escuchando en el puerto ${PORT}`);
     });
+}
+
+if (process.env.NODE_ENV !== 'production' && require.main === module) {
+    startServer();
 }
 
 // EXPORTACIÓN OBLIGATORIA PARA VERCEL

@@ -9,6 +9,13 @@ const cba_contenido = require('../../models/contenido');
 // 1. CREAR SOLICITUD
 router.post('/solicitud', async (req, res) => {
     try {
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({
+                error: "No hay conexión activa con MongoDB",
+                detalle: "Revisa la variable MONGO_URI en Vercel y el estado de tu cluster de Atlas"
+            });
+        }
+
         const datosUsuario = req.body;
 
         // Si el cliente envía un ID en el campo contenido, buscamos todo su objeto en la BD

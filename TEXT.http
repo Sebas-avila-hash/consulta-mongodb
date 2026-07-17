@@ -1,4 +1,4 @@
-POST http://localhost:3000/api/v1/contenidos
+POST https://consulta-mongod.vercel.app/api/v1/contenidos
 Content-Type: application/json
 
 {
@@ -8,7 +8,8 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/v1/aprendices/solicitud
+
+POST https://consulta-mongod.vercel.app/api/v1/aprendices/solicitud
 Content-Type: application/json
 
 {
@@ -18,3 +19,17 @@ Content-Type: application/json
     "formacion": "ADSO",
     "contenido": "6a58fa7d1c44ba5064e54d27"
 }
+###
+POST https://consulta-mongod.vercel.app/api/v1/aprendices/solicitud
+Content-Type: application/json
+
+{
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "email": "juan.perez@example.com",
+  "formacion": "Desarrollo Web",
+  "estado": "pendiente",
+  "contenido": null
+}
+###
+GET https://consulta-mongod.vercel.app/api/v1/aprendices

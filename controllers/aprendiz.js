@@ -4,6 +4,13 @@ const CbaAprendiz = require('../models/cba_aprendiz');
 // 1. OBTENER APRENDICES (Traer todos los registros de forma segura)
 const obtenerAprendices = async (req, res) => {
     try {
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({
+                error: "No hay conexión activa con MongoDB",
+                detalle: "Revisa la variable MONGO_URI en tu entorno y el estado del cluster de Atlas"
+            });
+        }
+
         const aprendices = await CbaAprendiz.find().populate('contenido');
         return res.status(200).json(aprendices);
     } catch (error) {
